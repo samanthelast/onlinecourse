@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:online_courses/screens/profile_login_register.dart';
 import 'package:online_courses/services/MyProxy.dart';
 import 'package:online_courses/services/auth.dart';
+import 'package:online_courses/shared/loading.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -24,7 +25,7 @@ class _LoginState extends State<Login> {
   String password = '';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ? Loading() :Scaffold(
       resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           centerTitle: true,
@@ -111,14 +112,20 @@ class _LoginState extends State<Login> {
                     setState(() => loading = true);
                     dynamic result = await _auth.signInWithEmailAndPassword(email, password);
                    
-                 
-                   
+              
                     if(result == null) {
                       setState(() {
                         loading = false;
                         error = 'Could not sign in with those credentials';
                       });
-                    }
+                    }else{
+                                      setState(() {
+                                        loading = false;
+                                        Navigator.pop(context);
+                                      });
+                                          
+                                    }
+                    
                   }
 
 
