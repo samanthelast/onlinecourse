@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "547698912890",
+    "firebase_url": "https://online-course-27851.firebaseio.com",
+    "project_id": "online-course-27851",
+    "storage_bucket": "online-course-27851.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547698912890:android:ebf52fea964ced6493d5c3",
+        "android_client_info": {
+          "package_name": "com.example.online_courses"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "547698912890-9201jed3pbvoc5h7hiatfnd74nds76u5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.online_courses",
+            "certificate_hash": "3e6793789becdc03c5b4ae35bd6248d37e19fee9"
+          }
+        },
+        {
+          "client_id": "547698912890-b8f1q0tgbnggvebsjqgsomr5hnvv1v2t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN4SHu7MEMQewwWfyvGqbB8FNhxNeHG9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "547698912890-b8f1q0tgbnggvebsjqgsomr5hnvv1v2t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
