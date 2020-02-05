@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_courses/services/auth.dart';
+import 'package:online_courses/widgets/support_contact.dart';
 
 import 'profile_login.dart';
 
@@ -45,22 +46,11 @@ class ProfileLogedInFalse extends StatelessWidget {
                 flex: 0,
                 child: Padding(padding: EdgeInsets.only(bottom: 32),child: Column(
                   children: <Widget>[
-                    Directionality(
-                      child: ListTile(
-                        title: Text('تماس با پشتیبانی'),
-                        leading: Icon(Icons.phone),
-                        onTap: () {},
-                      ),
-                      textDirection: TextDirection.rtl,
-                    ),
-                    Directionality(
-                      child: ListTile(
-                        title: Text('درباره ما'),
-                        leading: Icon(Icons.developer_mode),
-                        onTap: () {},
-                      ),
-                      textDirection: TextDirection.rtl,
-                    )
+                    SupportContact(),
+                    
+                       
+                      
+                    
                   ],
                 ),),
               )
