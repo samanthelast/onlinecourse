@@ -134,6 +134,7 @@ class _StateRegister extends State<Register> {
                                       setState(() {
                                         loading = false;
                                         Navigator.pop(context);
+                                         Navigator.pop(context);
                                       });
                                           
                                     }

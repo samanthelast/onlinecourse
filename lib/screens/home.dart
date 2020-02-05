@@ -20,9 +20,10 @@ class _HomeState extends State<Home> {
         
         children: <Widget>[
           BigSoloCard('assets/images/tabligh1.jpg'),
+
           Horizontal_big_card('جدیدترین'),
            Horizontal_big_card('پر بازدید'),
-           BigSoloCard('assets/images/tabligh2.jpg'),
+           
             Horizontal_big_card('رایگان'),
 
              Horizontal_big_card('کامپیوتر'),
