@@ -28,13 +28,13 @@ class _SupportContactState extends State<SupportContact> {
         // return object of type Dialog
         return Directionality(
           child: AlertDialog(
-            title: new Text("تماس با پشتیبانی"),
+            title: new Text("تماس با پشتیبانی",),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text('شماره تماس'),
-                Text('09373808573'),
+                Text('09373808573',style: TextStyle(fontFamily: 'Vazir' )),
                 Text('ایمیل'),
                 Text('samanthelast@gmail.com'),
               ],

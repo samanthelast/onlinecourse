@@ -16,7 +16,7 @@ import 'models/user.dart';
 
 
 void main() {
-  HttpOverrides.global = new MyHttpOverrides() ;
+  //HttpOverrides.global = new MyHttpOverrides() ;
   runApp(MyApp());
 }
 
@@ -37,6 +37,8 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           accentIconTheme: IconThemeData(color: Colors.green),
           iconTheme: IconThemeData(color: Colors.green),
+          fontFamily: 'Vazir',
+          
         ));
   }
 }
