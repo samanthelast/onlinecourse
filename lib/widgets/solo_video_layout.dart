@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:online_courses/screens/course.dart';
 
+import 'chewie_list_item.dart';
+
+import 'package:video_player/video_player.dart';
 /// This is the stateless widget that the main application instantiates.
 class Solo_video_layout extends StatelessWidget {
   final String videoID;
   final String title;
   final String creator;
-  final String imageVal;
+  //final String imageVal;
   final String price;
   final String description;
   
   
 
-  Solo_video_layout(this.videoID,this.title,this.creator,this.imageVal,this.price,this.description);
+  Solo_video_layout(this.videoID,this.title,this.creator,this.price,this.description);
    
 
     String getVideoID(){
       return videoID;
     }
-  String getImageVal() {
-    return imageVal;
-  }
+ 
   String getTitle(){return title;}
 String getCreator(){return creator;}
 
@@ -49,9 +50,14 @@ String getCreator(){return creator;}
           crossAxisAlignment: CrossAxisAlignment.end,
           
         children: <Widget>[
-          Image.network(imageVal,fit: BoxFit.fitWidth,
-          height: 100,width: 100,), 
-          
+          ChewieListItem(
+            videoPlayerController: VideoPlayerController.network(
+              'https://as2.cdn.asset.aparat.com/aparat-video/532a96f2e7f217246783f8b58459fa8019041409-144p__79437.mp4',
+            ),
+            looping: false,
+          )
+           
+          ,
           Text(
                   title,
                   textDirection: TextDirection.rtl,

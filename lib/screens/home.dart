@@ -27,7 +27,8 @@ class _HomeState extends State<Home> {
               children:
                   snapshot.data.documents.map((DocumentSnapshot document) {
                    
-                return Horizontal_big_card(title: document['title'],creator: document['creator'],videos:document['videos']);
+                return Horizontal_big_card(title: document['title'],creator: document['creator'],
+                videos:document['videos'],banner:document['banner']);
               }).toList(),
             ));
         }

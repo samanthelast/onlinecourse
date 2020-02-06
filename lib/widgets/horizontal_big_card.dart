@@ -6,20 +6,29 @@ class Horizontal_big_card extends StatefulWidget {
   final String title;
   final String creator;
   final List<dynamic> videos;
-  Horizontal_big_card({this.title, this.creator, this.videos});
+  final String banner;
+  Horizontal_big_card({this.title, this.creator, this.videos, this.banner});
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<Horizontal_big_card> {
-  final String imageVal =
-      'https://firebasestorage.googleapis.com/v0/b/online-course-27851.appspot.com/o/Capture001.png?alt=media&token=bc98902f-9419-4585-8c2f-b9a59b991fd9';
-
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.grey[50],
       child: Column(
         children: <Widget>[
+          Container(
+  width: MediaQuery.of(context).size.width,
+  height: 200,
+  decoration: BoxDecoration(
+    image: DecorationImage(
+      fit: BoxFit.fill,
+      image: NetworkImage(widget.banner),
+    ),
+  ),
+),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -35,8 +44,9 @@ class _MyHomePageState extends State<Horizontal_big_card> {
                 ],
               ),
               Container(
-                padding: EdgeInsets.only(right: 16, top: 16),
+                padding: EdgeInsets.only(right: 16, top: 16, bottom: 8),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     Text(
                       widget.title,
@@ -46,6 +56,7 @@ class _MyHomePageState extends State<Horizontal_big_card> {
                     ),
                     Text(
                       widget.creator,
+                       textDirection: TextDirection.rtl,
                       style: TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                   ],
@@ -53,41 +64,6 @@ class _MyHomePageState extends State<Horizontal_big_card> {
               ),
             ],
           ),
-          SingleChildScrollView(
-              reverse: true,
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: <Widget>[
-                  Text('1'),
-                  Text('x'),
-                  SizedBox(child: ListView(
-  padding: const EdgeInsets.all(8),
-  children: <Widget>[
-    Container(
-      height: 50,
-      color: Colors.amber[600],
-      child: const Center(child: Text('Entry A')),
-    ),
-    Container(
-      height: 50,
-      color: Colors.amber[500],
-      child: const Center(child: Text('Entry B')),
-    ),
-    Container(
-      height: 50,
-      color: Colors.amber[100],
-      child: const Center(child: Text('Entry C')),
-    ),
-  ],
-),
-                  height: 200,width: 200,)
-                 
-                ],
-              )
-              //Solo_video_layout('1001', 'اموزش  ریاضی 2', 'محمدرضا جوان', imageVal, '23', 'description'),
-
-              // Solo_video_layout('1001', 'اموزش  ریاضی 2', 'محمدرضا جوان', imageVal, '23', 'description'),
-              )
         ],
       ),
     );
@@ -102,6 +78,4 @@ class _MyHomePageState extends State<Horizontal_big_card> {
               ),
         ));
   }
-
-
 }
