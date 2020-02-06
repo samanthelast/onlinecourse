@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
                 child: ListView(
               children:
                   snapshot.data.documents.map((DocumentSnapshot document) {
-                return Horizontal_big_card(document['title']);
+                return Horizontal_big_card(document['title'],document['creator']);
               }).toList(),
             ));
         }
