@@ -101,7 +101,7 @@ class _LoginState extends State<Login> {
                                 height: 60.0,
                                 child: new Text("فراموشی رمز عبور",
                                     style: new TextStyle(
-                                        fontSize: 17.0, color: Colors.green))),
+                                        fontSize: 17.0, color: Colors.blue))),
                           ),
                         ),
                         Expanded(
@@ -134,7 +134,7 @@ class _LoginState extends State<Login> {
                                   alignment: Alignment.center,
                                   height: 60.0,
                                   decoration: new BoxDecoration(
-                                      color: Colors.green,
+                                      color: Colors.blue,
                                       borderRadius:
                                           new BorderRadius.circular(9.0)),
                                   child: new Text("ورود",
@@ -185,7 +185,7 @@ class _LoginState extends State<Login> {
                                 'ورود با حساب گوگل',
                                 style: TextStyle(
                                   fontSize: 20,
-                                  color: Colors.grey,
+                                  color: Colors.blue,
                                 ),
                               ),
                             )
@@ -207,7 +207,7 @@ class _LoginState extends State<Login> {
                               child: new Text("هنوز ثبت نام نکرده ام",
                                   style: new TextStyle(
                                       fontSize: 17.0,
-                                      color: Colors.green,
+                                      color: Colors.blue,
                                       fontWeight: FontWeight.bold)),
                               onTap: () {
                                 _RouteToRegisterScreen(context);

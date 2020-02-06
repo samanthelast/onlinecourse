@@ -149,7 +149,7 @@ class _StateRegister extends State<Register> {
                                   height: 60.0,
                                   width: 128,
                                   decoration: new BoxDecoration(
-                                      color: Colors.green,
+                                      color: Colors.blue,
                                       borderRadius:
                                           new BorderRadius.circular(9.0)),
                                   child: new Text("ثبت نام",

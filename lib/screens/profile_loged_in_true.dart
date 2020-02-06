@@ -41,7 +41,7 @@ class ProfileLogedInTrue extends StatelessWidget {
                   Directionality(
                     child: ListTile(
                       title: Text('محبوب ها'),
-                      leading: Icon(Icons.favorite),
+                      leading: Icon(Icons.favorite,color: Colors.red,),
                       onTap: () {},
                     ),
                     textDirection: TextDirection.rtl,
@@ -49,7 +49,7 @@ class ProfileLogedInTrue extends StatelessWidget {
                   Directionality(
                     child: ListTile(
                       title: Text('خریداری شده ها'),
-                      leading: Icon(Icons.shopping_basket),
+                      leading: Icon(Icons.shopping_basket,color: Colors.blue,),
                       onTap: () {},
                     ),
                     textDirection: TextDirection.rtl,
@@ -63,12 +63,15 @@ class ProfileLogedInTrue extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   SupportContact(),
-                  
-                  ListTile(
-                    trailing:
-                        Text(' Saman_Ariyanpour1378@gmail.com حساب کاربری '),
-                    onTap: () {},
-                  ),
+                   Directionality(
+                    child: ListTile(
+                      title: Text('Saman_Ariyanpour1378@gmail.com'),
+                      leading: Icon(Icons.person,color: Colors.blue,),
+                      onTap: () {},
+                    ),
+                    textDirection: TextDirection.rtl,
+                  )
+                  ,
                   ButtonBar(
                     alignment: MainAxisAlignment.start,
                     children: <Widget>[

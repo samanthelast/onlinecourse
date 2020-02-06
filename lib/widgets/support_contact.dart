@@ -11,7 +11,7 @@ class _SupportContactState extends State<SupportContact> {
     return Directionality(
       child: ListTile(
         title: Text('تماس با پشتیبانی'),
-        leading: Icon(Icons.phone),
+        leading: Icon(Icons.phone,color: Colors.blue),
         onTap: () {
           _showDialog();
         },

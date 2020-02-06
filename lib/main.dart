@@ -31,12 +31,13 @@ class MyApp extends StatelessWidget {
         title: _title,
         home: MyStatefulWidget(),
         theme: ThemeData(
-          accentColor: Colors.green,
-          primaryColor: Colors.green,
-          primarySwatch: Colors.green,
+          
+          accentColor: Colors.blue,
+          primaryColor: Colors.blue,
+          primarySwatch: Colors.blue,
           brightness: Brightness.light,
-          accentIconTheme: IconThemeData(color: Colors.green),
-          iconTheme: IconThemeData(color: Colors.green),
+          accentIconTheme: IconThemeData(color: Colors.blue),
+          iconTheme: IconThemeData(color: Colors.blue),
           fontFamily: 'Vazir',
           
         ));
@@ -75,6 +76,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: Colors.blue,
+         
           unselectedItemColor: Colors.grey,
           showUnselectedLabels: true,
           items: const <BottomNavigationBarItem>[
@@ -96,7 +99,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.black,
+          
           onTap: _onItemTapped,
         ),
       ),
