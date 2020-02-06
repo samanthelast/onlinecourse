@@ -50,6 +50,8 @@ flutter:
   assets:
    - assets/images/tabligh1.jpg
    - assets/images/tabligh2.jpg
+   - assets/images/google_logo.png
+   
 
 
 
