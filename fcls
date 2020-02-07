@@ -1,0 +1,65 @@
+[33mcommit a10e9f9ecd92702d5ef89cfed0ff1c4a5955a887[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Saman Ariyanpour <samanthelast@gmail.com>
+Date:   Fri Feb 7 16:43:37 2020 +0330
+
+    email response fixed
+
+[33mcommit 02ae22752f5381bc876ef1e4f60fd14cd9c563a7[m
+Author: Saman Ariyanpour <samanthelast@gmail.com>
+Date:   Thu Feb 6 21:24:16 2020 +0330
+
+    colors fixed
+
+[33mcommit fb29ed7db95750db7f680de173a14a09c6e00d2f[m
+Author: Saman Ariyanpour <samanthelast@gmail.com>
+Date:   Thu Feb 6 20:29:55 2020 +0330
+
+    home page fixed
+
+[33mcommit 0d4e0687d676fbcf373b6b64cd258b953e1d4aae[m
+Author: Saman Ariyanpour <samanthelast@gmail.com>
+Date:   Thu Feb 6 16:29:49 2020 +0330
+
+    fixed card bug
+
+[33mcommit a923e3207ff63b00220fd0e8ac654364f9605747[m
+Author: Saman Ariyanpour <samanthelast@gmail.com>
+Date:   Thu Feb 6 13:59:54 2020 +0330
+
+    working on big horizontal layout
+
+[33mcommit 20a231d8eb2236ee25d296bd7d09a157e548212d[m
+Author: Saman Ariyanpour <samanthelast@gmail.com>
+Date:   Thu Feb 6 13:52:14 2020 +0330
+
+    first firestore get
+
+[33mcommit a057e9a06fd96e5f0c295495405befe8a1d34f30[m
+Author: Saman Ariyanpour <samanthelast@gmail.com>
+Date:   Wed Feb 5 15:10:04 2020 +0330
+
+    register navigation pop fixed
+
+[33mcommit 92bba61cc629a84354bc53a532298eec40525b15[m
+Author: Saman Ariyanpour <samanthelast@gmail.com>
+Date:   Wed Feb 5 12:04:35 2020 +0330
+
+    font fixed
+
+[33mcommit 64fb632154d79462288e57e4330a7d72d07d5636[m
+Author: Saman Ariyanpour <samanthelast@gmail.com>
+Date:   Wed Feb 5 10:48:04 2020 +0330
+
+    dialog alert added
+
+[33mcommit 636fbb26105d03362dc227c77f560c880aeb43e8[m
+Author: Saman Ariyanpour <samanthelast@gmail.com>
+Date:   Mon Feb 3 19:45:34 2020 +0330
+
+    loading fixed
+
+[33mcommit 555905f3d761c44a7fc8df434fcdf66be485cd1c[m
+Author: Saman Ariyanpour <samanthelast@gmail.com>
+Date:   Mon Feb 3 19:22:28 2020 +0330
+
+    first time

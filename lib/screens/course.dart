@@ -20,7 +20,7 @@ class Course extends StatelessWidget {
       this.videoLengh,
       this.price,
       this.description,
-      String videoID})
+      })
       : super(key: key);
 
 

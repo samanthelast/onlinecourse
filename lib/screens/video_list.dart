@@ -83,7 +83,7 @@ class _VideoListState extends State<VideoList> {
   }
   void _RouteToCourseScreen(BuildContext context) {
   
-    Navigator.push(
+/*     Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => Course(
@@ -96,6 +96,6 @@ class _VideoListState extends State<VideoList> {
           ),
         ));
   
-
+ */
 }
 }

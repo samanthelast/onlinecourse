@@ -117,7 +117,7 @@ class _SearchState extends State<Search> {
     );
   }
 void _RouteToCourseScreen(BuildContext context) {
-  
+  /* 
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -131,7 +131,7 @@ void _RouteToCourseScreen(BuildContext context) {
           ),
         ));
   
-
+ */
 }
   /*  void _RouteToDetailScreen(BuildContext context, int cardColor, String imgUrl,
       String title, String previousPrice, String price) {
