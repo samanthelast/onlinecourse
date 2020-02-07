@@ -1,13 +1,40 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:online_courses/services/auth.dart';
 import 'package:online_courses/widgets/support_contact.dart';
 
 import 'profile_login.dart';
 
-class ProfileLogedInTrue extends StatelessWidget {
-  ProfileLogedInTrue();
+class ProfileLogedInTrue extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _ProfileLogedInTrueState();
+  }
+}
 
+class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
   final AuthService _auth = AuthService();
+  String _userEmail = 'empty';
+  
+  _getUserAuthEmail() async {
+    try {
+      FirebaseUser user = await FirebaseAuth.instance.currentUser();
+      setState(() {
+        _userEmail = user.email;
+
+
+      });
+      return this._userEmail;
+    } catch (error) { print(error.toString());
+      return 'failed';}
+  }
+
+  @override
+  void initState() {
+    super.initState();
+     _getUserAuthEmail();
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -41,7 +68,10 @@ class ProfileLogedInTrue extends StatelessWidget {
                   Directionality(
                     child: ListTile(
                       title: Text('محبوب ها'),
-                      leading: Icon(Icons.favorite,color: Colors.red,),
+                      leading: Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      ),
                       onTap: () {},
                     ),
                     textDirection: TextDirection.rtl,
@@ -49,7 +79,10 @@ class ProfileLogedInTrue extends StatelessWidget {
                   Directionality(
                     child: ListTile(
                       title: Text('خریداری شده ها'),
-                      leading: Icon(Icons.shopping_basket,color: Colors.blue,),
+                      leading: Icon(
+                        Icons.shopping_basket,
+                        color: Colors.blue,
+                      ),
                       onTap: () {},
                     ),
                     textDirection: TextDirection.rtl,
@@ -63,15 +96,17 @@ class ProfileLogedInTrue extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   SupportContact(),
-                   Directionality(
+                  Directionality(
                     child: ListTile(
-                      title: Text('Saman_Ariyanpour1378@gmail.com'),
-                      leading: Icon(Icons.person,color: Colors.blue,),
+                      title: Text(_userEmail),
+                      leading: Icon(
+                        Icons.person,
+                        color: Colors.blue,
+                      ),
                       onTap: () {},
                     ),
                     textDirection: TextDirection.rtl,
-                  )
-                  ,
+                  ),
                   ButtonBar(
                     alignment: MainAxisAlignment.start,
                     children: <Widget>[
