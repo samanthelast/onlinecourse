@@ -15,24 +15,24 @@ class ProfileLogedInTrue extends StatefulWidget {
 class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
   final AuthService _auth = AuthService();
   String _userEmail = 'empty';
-  
+
   _getUserAuthEmail() async {
     try {
       FirebaseUser user = await FirebaseAuth.instance.currentUser();
       setState(() {
         _userEmail = user.email;
-
-
       });
       return this._userEmail;
-    } catch (error) { print(error.toString());
-      return 'failed';}
+    } catch (error) {
+      print(error.toString());
+      return 'failed';
+    }
   }
 
   @override
   void initState() {
     super.initState();
-     _getUserAuthEmail();
+    _getUserAuthEmail();
   }
 
   @override
@@ -52,25 +52,19 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
               flex: 1,
               child: Column(
                 children: <Widget>[
-                  ListTile(
-                    title: ButtonBar(
-                      alignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        FlatButton(
-                          child: const Text('افزایش اعتبار'),
-                          onPressed: () {/* ... */},
-                        ),
-                      ],
-                    ),
-                    trailing: Text('اعتبار من: 0 تومان'),
-                    onTap: () {},
-                  ),
                   Directionality(
                     child: ListTile(
-                      title: Text('محبوب ها'),
+                      trailing: FlatButton(
+                        child: const Text(
+                          'افزایش اعتبار',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                        onPressed: () {/* ... */},
+                      ),
+                      title: Text('اعتبار من ' + '0' + ' تومان'),
                       leading: Icon(
-                        Icons.favorite,
-                        color: Colors.red,
+                        Icons.credit_card,
+                        color: Colors.blue,
                       ),
                       onTap: () {},
                     ),
@@ -78,10 +72,21 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
                   ),
                   Directionality(
                     child: ListTile(
-                      title: Text('خریداری شده ها'),
+                      title: Text('خریداری شده های من'),
                       leading: Icon(
                         Icons.shopping_basket,
                         color: Colors.blue,
+                      ),
+                      onTap: () {},
+                    ),
+                    textDirection: TextDirection.rtl,
+                  ),
+                  Directionality(
+                    child: ListTile(
+                      title: Text('محبوب های من'),
+                      leading: Icon(
+                        Icons.favorite,
+                        color: Colors.red,
                       ),
                       onTap: () {},
                     ),
@@ -98,6 +103,13 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
                   SupportContact(),
                   Directionality(
                     child: ListTile(
+                      trailing: FlatButton(
+                        child: const Text(
+                          'ویرایش',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                        onPressed: () {/* ... */},
+                      ),
                       title: Text(_userEmail),
                       leading: Icon(
                         Icons.person,
@@ -107,22 +119,22 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
                     ),
                     textDirection: TextDirection.rtl,
                   ),
-                  ButtonBar(
-                    alignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      FlatButton(
-                        child: Text(
+                  Directionality(
+                    child: ListTile(
+                      trailing: FlatButton(
+                        child: const Text(
                           'خروج',
                           style: TextStyle(color: Colors.red),
                         ),
-                        onPressed: () async {
-                          dynamic result = await _auth.signOut();
+                        onPressed: () async {dynamic result = await _auth.signOut();
 
-                          print(result);
-                        },
+                          print(result);},
                       ),
-                    ],
+                      onTap: () {},
+                    ),
+                    textDirection: TextDirection.rtl,
                   ),
+                  
                 ],
               ),
             )

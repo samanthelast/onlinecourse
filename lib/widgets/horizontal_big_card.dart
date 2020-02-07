@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_courses/screens/course.dart';
 import 'package:online_courses/screens/video_list.dart';
 import 'package:online_courses/widgets/solo_video_layout.dart';
 
@@ -38,7 +39,7 @@ class _MyHomePageState extends State<Horizontal_big_card> {
                   FlatButton(
                     child: const Text('جزئیات'),
                     onPressed: () {
-                      _RouteToVideoListScreen(context);
+                      _RouteToCourseScreen(context);
                     },
                   ),
                 ],
@@ -69,13 +70,11 @@ class _MyHomePageState extends State<Horizontal_big_card> {
     );
   }
 
-  void _RouteToVideoListScreen(BuildContext context) {
+  void _RouteToCourseScreen(BuildContext context) {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => VideoList(
-              //categoryID
-              ),
+          builder: (context) => Course(),
         ));
   }
 }

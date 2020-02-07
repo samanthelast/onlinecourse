@@ -5,15 +5,15 @@ import 'package:online_courses/widgets/chewie_list_item.dart';
 import 'package:video_player/video_player.dart';
 
 class Course extends StatelessWidget {
-  final String videoVal;
+/*   final String videoVal;
   final String title;
   final String videoLengh;
   final String price;
   final String description;
-
+ */
   // receive data from the mainScreen as a parameter
 
-  const Course(
+/*   const Course(
       {Key key,
       this.videoVal,
       this.title,
@@ -23,7 +23,7 @@ class Course extends StatelessWidget {
       })
       : super(key: key);
 
-
+ */
 
   @override
   Widget build(BuildContext context) {

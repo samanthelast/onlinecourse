@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:online_courses/screens/course.dart';
 
 import 'chewie_list_item.dart';
@@ -78,7 +78,7 @@ String getCreator(){return creator;}
     
     void _RouteToCourseScreen(BuildContext context) {
   
-    Navigator.push(
+   /*  Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => Course(
@@ -86,11 +86,11 @@ String getCreator(){return creator;}
             videoVal: '1',
             title:'1',
             videoLengh:'1',
-            price:'1',
+            price:'1',/*  */
             description:'1',
           ),
         ));
-  
+   */
 
 }
-}
+} */
