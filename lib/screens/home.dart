@@ -25,6 +25,7 @@ class _HomeState extends State<Home> {
             return Container(
               padding: EdgeInsets.only(top: 32,right:16,left:16),
                 child: ListView(
+                  
               children:
                   snapshot.data.documents.map((DocumentSnapshot document) {
                    

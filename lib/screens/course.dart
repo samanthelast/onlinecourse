@@ -37,6 +37,7 @@ class _CourseState extends State<Course> {
                     return new Text("Loading");
                   }
                   var res = snapshot.data;
+                  List<dynamic> videos = res['videos'];
                   //return new Text(userDocument['credit'].toString());
                   return Column(
                     children: <Widget>[
@@ -53,72 +54,147 @@ class _CourseState extends State<Course> {
                       Container(
                         alignment: Alignment.topRight,
                         padding: EdgeInsets.only(top: 16, left: 16, right: 16),
-                        child:  Container(
-                padding: EdgeInsets.only(left: 16,right: 16, top: 16, bottom: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Text(
-                      res['title'],
-                      textDirection: TextDirection.rtl,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      res['creator'],
-                       textDirection: TextDirection.rtl,
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
-                    ),
-                    SizedBox(height: 16,),
-                    Row(children: <Widget>[
-                      Expanded(flex:1,child: Row(children: <Widget>[ Container(
-                                  alignment: Alignment.center,
-                                  height: 32.0,
-                                  width: 128,
-                                  decoration: new BoxDecoration(
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              left: 16, right: 16, top: 16, bottom: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                                   Row(
+                                children: <Widget>[
+                                  Expanded(
+                                      flex: 1,
+                                      child: Row(
+                                       
+                                        children: <Widget>[
+                                          SizedBox(width: 16,),
+                                         
+                                          IconButton(color: Colors.red,onPressed: (){},icon: Icon(Icons.favorite_border,))
+                                        ],
+                                      )),
+                                  Expanded(
+                                      flex: 1,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          
+                              Column(children: <Widget>[
+                                Text(
+                                res['title'],
+                                textDirection: TextDirection.rtl,
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),Text(
+                                res['creator'],
+                                textDirection: TextDirection.rtl,
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 12),
+                              ),
+                              ],)
+                              
+                                        ],
+                                      )),
+                                ],
+                              ),
+                              
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                      flex: 1,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Container(
+                                              alignment: Alignment.center,
+                                              height: 32.0,
+                                              width: 128,
+                                              decoration: new BoxDecoration(
+                                                  color: Colors.blue,
+                                                  borderRadius:
+                                                      new BorderRadius.circular(
+                                                          9.0)),
+                                              child: new Text("خرید توتاریال",
+                                                  style: new TextStyle(
+                                                      fontSize: 16.0,
+                                                      color: Colors.white)))
+                                        ],
+                                      )),
+                                  Expanded(
+                                      flex: 1,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          Text('تومان'),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(res['price'].toString()),
+                                          SizedBox(
+                                            width: 16,
+                                          ),
+                                          Icon(
+                                            Icons.local_atm,
+                                            color: Colors.blue,
+                                          ),
+                                        ],
+                                      )),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Text(
+                                res['description'],
+                                textDirection: TextDirection.rtl,
+                                textAlign: TextAlign.justify,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: (240.0*videos.length),
+                                child: ListView.builder(
+                                  
+                                  
+                                  itemCount: videos.length,itemBuilder: (BuildContext context, int index) {
+                                  return Column(
+                                    children: <Widget>[
+                                      Text(
+                                'ویدیو ' + (index + 1).toString(),
+                                textDirection: TextDirection.rtl,
+                               
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                                      ChewieListItem(
+                                videoPlayerController:
+                                    VideoPlayerController.network(
+                                  videos[index],
+                                ),
+                                looping: false,
 
-                                      color: Colors.blue,
-                                      borderRadius:
-                                          new BorderRadius.circular(9.0)),
-                                  child: new Text("خرید توتاریال",
-                                      style: new TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.white)))],)),
-                      Expanded(flex:1,child: Row(mainAxisAlignment: MainAxisAlignment.end,children: <Widget>[Text('تومان' ),
-                      SizedBox(width: 8,),
-                      Text(  res['price'].toString() ),
-                      SizedBox(width: 16,),
-                      Icon(
-                              Icons.local_atm,
-                              color: Colors.blue,
-                            ),],)),
-                      
-                      
-                     
-                            
-                    ],),
-                    SizedBox(height: 16,),
-                    Text(
-                      res['description'],
-                      textDirection: TextDirection.rtl,
-                      textAlign: TextAlign.justify,
-                      style:
-                          TextStyle(fontSize: 16,),
-                    ),
-                  ],
-                ),
-              ),
+                              )
+                                    ],
+                                  ) ;
+                                },),
+                              ),
+                              
+                            ],
+                          ),
+                        ),
                       )
                     ],
                   );
                 }),
-            ChewieListItem(
-              videoPlayerController: VideoPlayerController.network(
-                'https://as2.cdn.asset.aparat.com/aparat-video/532a96f2e7f217246783f8b58459fa8019041409-144p__79437.mp4',
-              ),
-              looping: false,
-            ),
-            
           ],
         ),
       )),
