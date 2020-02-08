@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:online_courses/services/auth.dart';
@@ -15,12 +16,14 @@ class ProfileLogedInTrue extends StatefulWidget {
 class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
   final AuthService _auth = AuthService();
   String _userEmail = 'empty';
+  String _userID;
 
   _getUserAuthEmail() async {
     try {
       FirebaseUser user = await FirebaseAuth.instance.currentUser();
       setState(() {
         _userEmail = user.email;
+        _userID = user.uid;
       });
       return this._userEmail;
     } catch (error) {
@@ -33,6 +36,7 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
   void initState() {
     super.initState();
     _getUserAuthEmail();
+    //_getUserCredit();
   }
 
   @override
@@ -52,24 +56,37 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
               flex: 1,
               child: Column(
                 children: <Widget>[
-                  Directionality(
-                    child: ListTile(
-                      trailing: FlatButton(
-                        child: const Text(
-                          'افزایش اعتبار',
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                        onPressed: () {/* ... */},
-                      ),
-                      title: Text('اعتبار من ' + '0' + ' تومان'),
-                      leading: Icon(
-                        Icons.credit_card,
-                        color: Colors.blue,
-                      ),
-                      onTap: () {},
-                    ),
-                    textDirection: TextDirection.rtl,
-                  ),
+                  StreamBuilder(
+                      stream: Firestore.instance
+                          .collection('users')
+                          .document(_userID)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return new Text("Loading");
+                        }
+                        var userDocument = snapshot.data;
+                        //return new Text(userDocument['credit'].toString());
+                        return Directionality(
+                          child: ListTile(
+                            trailing: FlatButton(
+                              child: const Text(
+                                'افزایش اعتبار',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                              onPressed: () {/* ... */},
+                            ),
+                            title: Text('اعتبار من ' + userDocument['credit'].toString() + ' تومان'),
+                            leading: Icon(
+                              Icons.credit_card,
+                              color: Colors.blue,
+                            ),
+                            onTap: () {},
+                          ),
+                          textDirection: TextDirection.rtl,
+                        );
+                      }),
+                  
                   Directionality(
                     child: ListTile(
                       title: Text('خریداری شده های من'),
@@ -126,15 +143,16 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
                           'خروج',
                           style: TextStyle(color: Colors.red),
                         ),
-                        onPressed: () async {dynamic result = await _auth.signOut();
+                        onPressed: () async {
+                          dynamic result = await _auth.signOut();
 
-                          print(result);},
+                          print(result);
+                        },
                       ),
                       onTap: () {},
                     ),
                     textDirection: TextDirection.rtl,
                   ),
-                  
                 ],
               ),
             )
