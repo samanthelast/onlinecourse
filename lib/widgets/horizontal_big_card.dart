@@ -4,11 +4,14 @@ import 'package:online_courses/screens/video_list.dart';
 import 'package:online_courses/widgets/solo_video_layout.dart';
 
 class Horizontal_big_card extends StatefulWidget {
+  final String docID;
   final String title;
   final String creator;
-  final List<dynamic> videos;
+  //final List<dynamic> videos;
   final String banner;
-  Horizontal_big_card({this.title, this.creator, this.videos, this.banner});
+  //final int price;
+ // Horizontal_big_card({this.docID,this.title, this.creator, this.videos, this.banner,this.price});
+ Horizontal_big_card({this.docID,this.title, this.creator,  this.banner});
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -74,7 +77,7 @@ class _MyHomePageState extends State<Horizontal_big_card> {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => Course(),
+          builder: (context) => Course(docID: widget.docID),
         ));
   }
 }

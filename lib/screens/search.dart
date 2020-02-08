@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'course.dart';
+
 
 class Search extends StatefulWidget {
   Search({Key key, this.title}) : super(key: key);

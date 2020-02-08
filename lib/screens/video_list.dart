@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import 'course.dart';
+
 
 class VideoList extends StatefulWidget {
   VideoList({Key key}) : super(key: key);

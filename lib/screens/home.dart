@@ -21,14 +21,17 @@ class _HomeState extends State<Home> {
           case ConnectionState.waiting:
             return new Text('Loading...');
           default:
+
             return Container(
               padding: EdgeInsets.only(top: 32,right:16,left:16),
                 child: ListView(
               children:
                   snapshot.data.documents.map((DocumentSnapshot document) {
                    
-                return Horizontal_big_card(title: document['title'],creator: document['creator'],
-                videos:document['videos'],banner:document['banner']);
+                /* return Horizontal_big_card(docID:document.documentID ,title: document['title'],creator: document['creator'],
+                videos:document['videos'],banner:document['banner'],price:document['price']); */
+return Horizontal_big_card(docID:document.documentID ,title: document['title'],creator: document['creator'],banner:document['banner']);
+
               }).toList(),
             ));
         }
