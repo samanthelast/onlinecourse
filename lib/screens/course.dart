@@ -1,14 +1,16 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:online_courses/models/user.dart';
+import 'package:online_courses/services/database.dart';
 import 'package:online_courses/widgets/chewie_list_item.dart';
+import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 class Course extends StatefulWidget {
   final String docID;
-
   const Course({this.docID});
+
   @override
   _CourseState createState() {
     return _CourseState();
@@ -16,6 +18,45 @@ class Course extends StatefulWidget {
 }
 
 class _CourseState extends State<Course> {
+  int isliked = 0;
+  var _likeIcons = [Icons.favorite_border, Icons.favorite];
+  String _userID;
+  List<dynamic> liked_videos;
+  _getUserID() async {
+    try {
+      FirebaseUser user = await FirebaseAuth.instance.currentUser();
+      setState(() {
+        _userID = user.uid;
+      });
+    } catch (error) {
+      print(error.toString());
+      return 'failed';
+    }
+  }
+  
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserID();
+    //_getUserCredit();
+  }
+
+  _onChanged() {
+    
+    setState(() {
+      List<dynamic> courseID = [widget.docID];
+
+      //like bokon
+      if (isliked == 0) {
+        isliked = 1;
+      } else {
+        isliked = 0;
+      }
+      
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,16 +101,86 @@ class _CourseState extends State<Course> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
-                                   Row(
+                              Row(
                                 children: <Widget>[
                                   Expanded(
                                       flex: 1,
                                       child: Row(
-                                       
                                         children: <Widget>[
-                                          SizedBox(width: 16,),
-                                         
-                                          IconButton(color: Colors.red,onPressed: (){},icon: Icon(Icons.favorite_border,))
+                                          SizedBox(
+                                            width: 16,
+                                          ),
+                                          StreamBuilder(
+                                              stream: Firestore.instance
+                                                  .collection('users')
+                                                  .document(_userID)
+                                                  .snapshots(),
+                                              builder: (context, snapshot) {
+                                                if (!snapshot.hasData) {
+                                                  return new Text("Loading");
+                                                }
+                                                
+                                                var userDocument =
+                                                    snapshot.data;
+                                               
+                                                print(_userID);
+
+                                        if(_userID!=null){liked_videos =
+                                                          userDocument[
+                                                              'liked_videos'];
+                                                if(liked_videos.contains(widget.docID)){
+                                                  isliked =1;
+                                                }else{
+                                                  isliked =0;
+                                                }}
+                                                
+                                                //return new Text(userDocument['credit'].toString());
+                                                return IconButton(
+                                                  color: Colors.red,
+                                                  icon:
+                                                      Icon(_likeIcons[isliked]),
+                                                  onPressed: () async {
+                                                    
+
+                                                    if (_userID != null) {
+                                                      _onChanged();
+                                                      List<dynamic> courseID = [
+                                                        widget.docID
+                                                      ];
+                                                      //alredy liked or unliked?
+
+                                                      liked_videos =
+                                                          userDocument[
+                                                              'liked_videos'];
+
+                                                      //like bokon
+                                                      if (liked_videos.contains(
+                                                          widget.docID)) {
+                                                        await DatabaseService(
+                                                                uid: _userID)
+                                                            .UnLikeVideo(
+                                                                courseID);
+
+                                                        print(liked_videos
+                                                            .contains(
+                                                                'unlike shod'));
+                                                      } else {
+                                                        //remove from like
+                                                        await DatabaseService(
+                                                                uid: _userID)
+                                                            .LikeVideo(
+                                                                courseID);
+                                                        print(liked_videos
+                                                            .contains(
+                                                                'like shod'));
+                                                      }
+                                                    } else {
+                                                      //boro to page login;
+                                                      print("boro to login page");
+                                                    }
+                                                  },
+                                                );
+                                              }),
                                         ],
                                       )),
                                   Expanded(
@@ -78,26 +189,31 @@ class _CourseState extends State<Course> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: <Widget>[
-                                          
-                              Column(children: <Widget>[
-                                Text(
-                                res['title'],
-                                textDirection: TextDirection.rtl,
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold),
-                              ),Text(
-                                res['creator'],
-                                textDirection: TextDirection.rtl,
-                                style:
-                                    TextStyle(color: Colors.grey, fontSize: 12),
-                              ),
-                              ],)
-                              
+                                          Column(
+                                            children: <Widget>[
+                                              Text(
+                                                res['title'],
+                                                textDirection:
+                                                    TextDirection.rtl,
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                res['creator'],
+                                                textDirection:
+                                                    TextDirection.rtl,
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 12),
+                                              ),
+                                            ],
+                                          )
                                         ],
                                       )),
                                 ],
                               ),
-                              
                               SizedBox(
                                 height: 16,
                               ),
@@ -160,34 +276,32 @@ class _CourseState extends State<Course> {
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width,
-                                height: (240.0*videos.length),
+                                height: (250.0 * videos.length),
                                 child: ListView.builder(
-                                  
-                                  
-                                  itemCount: videos.length,itemBuilder: (BuildContext context, int index) {
-                                  return Column(
-                                    children: <Widget>[
-                                      Text(
-                                'ویدیو ' + (index + 1).toString(),
-                                textDirection: TextDirection.rtl,
-                               
-                                style: TextStyle(
-                                  fontSize: 16,
+                                  itemCount: videos.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Column(
+                                      children: <Widget>[
+                                        Text(
+                                          'ویدیو ' + (index + 1).toString(),
+                                          textDirection: TextDirection.rtl,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        ChewieListItem(
+                                          videoPlayerController:
+                                              VideoPlayerController.network(
+                                            videos[index],
+                                          ),
+                                          looping: false,
+                                        )
+                                      ],
+                                    );
+                                  },
                                 ),
                               ),
-                                      ChewieListItem(
-                                videoPlayerController:
-                                    VideoPlayerController.network(
-                                  videos[index],
-                                ),
-                                looping: false,
-
-                              )
-                                    ],
-                                  ) ;
-                                },),
-                              ),
-                              
                             ],
                           ),
                         ),
@@ -199,5 +313,9 @@ class _CourseState extends State<Course> {
         ),
       )),
     );
+  }
+
+  getFirebaseUser() async {
+    await FirebaseAuth.instance.currentUser();
   }
 }

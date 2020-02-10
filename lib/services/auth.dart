@@ -42,7 +42,7 @@ Future<bool> loginWithGoogle() async {
       FirebaseUser user = res.user;
 
         //auto create collection first time
-        await DatabaseService(uid: user.uid).updateUserData(0);
+        await DatabaseService(uid: user.uid).updateUserData(0,[]);
 
         //
 
@@ -79,7 +79,7 @@ Future<bool> loginWithGoogle() async {
       FirebaseUser user = result.user;
       
         //auto create collection first time
-        await DatabaseService(uid: user.uid).updateUserData(0);
+        await DatabaseService(uid: user.uid).updateUserData(0,[""]);
 
         //
       return _userFromFirebaseUser(user);
