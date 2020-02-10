@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:online_courses/services/auth.dart';
 import 'package:online_courses/widgets/support_contact.dart';
 
+import 'favourite.dart';
 import 'profile_login.dart';
 
 class ProfileLogedInTrue extends StatefulWidget {
@@ -105,7 +106,9 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
                         Icons.favorite,
                         color: Colors.red,
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        _RouteToFavScreen(context);
+                      },
                     ),
                     textDirection: TextDirection.rtl,
                   ),
@@ -162,11 +165,11 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
     );
   }
 
-  void _RouteToLoginScreen(BuildContext context) {
+  void _RouteToFavScreen(BuildContext context) {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => Login(),
+          builder: (context) => Favourite(),
         ));
   }
 }
