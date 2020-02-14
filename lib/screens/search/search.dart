@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online_courses/services/database.dart';
 
 
 
@@ -73,6 +74,7 @@ class _SearchState extends State<Search> {
                 child: TextField(
                   onChanged: (value) {
                     filterSearchResults(value);
+                  
                   },
                   controller: editingController,
                   decoration: InputDecoration(

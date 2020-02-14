@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:online_courses/screens/video_list.dart';
 
@@ -12,65 +13,48 @@ class Category extends StatefulWidget {
 }
 
 class _CategoryState extends State<Category> {
-  final names = [
-    'کامپیوتر',
-    'علوم مهندسی',
-    'اقتصاد',
-    'روانشناسی',
-    'موسیقی',
-    'بیولوژی',
-  ];
-  final icons = [
-    Icons.computer,
-    Icons.build,
-    Icons.attach_money,
-    Icons.accessibility,
-    Icons.audiotrack,
-    Icons.add_circle,
-  ];
+  List<dynamic> getCategories = [];
+  List<dynamic> disctinctCategories = [];
+  var unique ;
 
-  @override
   Widget build(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('menu').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return new Text('Loading...');
+          default:
 
-    return Container(
-      alignment: Alignment.topRight,
-      padding: EdgeInsets.only(top:32, left: 32, right: 32),
-      child: ListView.builder(
-              /* separatorBuilder: (context, index) => Divider(
-                color: Colors.black,
-              ), */
-              shrinkWrap: true,
-              itemCount: names.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: Directionality(
-                  child: ListTile(
-                    title: Text('${names[index]}'),
-                    leading: Icon(icons[index],color: Colors.green,),
-                    onTap: () {
-                       _RouteToVideoListScreen(context);
-                    },
-                  ),
-                  textDirection: TextDirection.rtl,
-                ),
-                );
-              }
-       ),
-    )
-      
-       
-    ;
+            return Container(
+              padding: EdgeInsets.only(top: 32,right:16,left:16),
+                child: ListView(
+                  
+              children:
+                  snapshot.data.documents.map((DocumentSnapshot document) {
+             getCategories.addAll(document['category']);
+                    final seen = Set<String>();
+                     unique =
+                        getCategories.where((str) => seen.add(str)).toList();
+
+                    print(unique);
+return Text(unique.toString());
+
+              }).toList(),
+            ));
+        }
+      },
+    );
   }
+
   void _RouteToVideoListScreen(BuildContext context) {
-  
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>VideoList(
-            //categoryID
-          ),
+          builder: (context) => VideoList(
+              //categoryID
+              ),
         ));
-  
-
-}
+  }
 }

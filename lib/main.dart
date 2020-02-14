@@ -6,7 +6,8 @@ import 'package:online_courses/screens/categories.dart';
 import 'package:online_courses/screens/home.dart';
 
 import 'package:online_courses/screens/profile_wrapper.dart';
-import 'package:online_courses/screens/search.dart';
+import 'package:online_courses/screens/search/search.dart';
+
 import 'package:online_courses/services/MyProxy.dart';
 import 'package:online_courses/services/auth.dart';
 import 'package:provider/provider.dart';

@@ -33,7 +33,6 @@ class _CourseState extends State<Course> {
       return 'failed';
     }
   }
-  
 
   @override
   void initState() {
@@ -43,7 +42,6 @@ class _CourseState extends State<Course> {
   }
 
   _onChanged() {
-    
     setState(() {
       List<dynamic> courseID = [widget.docID];
 
@@ -53,7 +51,6 @@ class _CourseState extends State<Course> {
       } else {
         isliked = 0;
       }
-      
     });
   }
 
@@ -119,30 +116,30 @@ class _CourseState extends State<Course> {
                                                 if (!snapshot.hasData) {
                                                   return new Text("Loading");
                                                 }
-                                                
+
                                                 var userDocument =
                                                     snapshot.data;
-                                               
+
                                                 print(_userID);
 
-                                        if(_userID!=null){liked_videos =
-                                                          userDocument[
-                                                              'liked_videos'];
-                                                             
-                                                if(liked_videos.contains(widget.docID)){
-                                                  isliked =1;
-                                                }else{
-                                                  isliked =0;
-                                                }}
-                                                
+                                                if (_userID != null) {
+                                                  liked_videos = userDocument[
+                                                      'liked_videos'];
+
+                                                  if (liked_videos
+                                                      .contains(widget.docID)) {
+                                                    isliked = 1;
+                                                  } else {
+                                                    isliked = 0;
+                                                  }
+                                                }
+
                                                 //return new Text(userDocument['credit'].toString());
                                                 return IconButton(
                                                   color: Colors.red,
                                                   icon:
                                                       Icon(_likeIcons[isliked]),
                                                   onPressed: () async {
-                                                    
-
                                                     if (_userID != null) {
                                                       _onChanged();
                                                       List<dynamic> courseID = [
@@ -177,11 +174,17 @@ class _CourseState extends State<Course> {
                                                       }
                                                     } else {
                                                       //boro to page login;
-                                                      print("boro to login page");
-                                                      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('ابتدا وارد حساب کاربری خود شوید',textAlign: TextAlign.center,),
-        
-      ));
+                                                      print(
+                                                          "boro to login page");
+                                                      Scaffold.of(context)
+                                                          .showSnackBar(
+                                                              SnackBar(
+                                                        content: Text(
+                                                          'ابتدا وارد حساب کاربری خود شوید',
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                      ));
                                                     }
                                                   },
                                                 );
