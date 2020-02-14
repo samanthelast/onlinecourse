@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:online_courses/services/auth.dart';
+import 'package:online_courses/widgets/horizontal_big_card.dart';
 
 class Favourite extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _FavouriteState extends State<Favourite> {
   final AuthService _auth = AuthService();
 
   String _userID;
+  List<dynamic> liked_videos;
 
   _getUserAuthEmail() async {
     try {
@@ -53,18 +55,39 @@ class _FavouriteState extends State<Favourite> {
                           return new Text("Loading");
                         }
                         var res = snapshot.data;
-                         List<dynamic> videos = res['liked_videos'];
-                         print(videos.toString());
+                        liked_videos = res['liked_videos'];
+                         print(liked_videos.toString());
                         //return new Text(userDocument['credit'].toString());
-                        return Directionality(
-                          child: ListTile(
-                           
-                            title: Text(videos.toString()),
-                            
-                            onTap: () {},
-                          ),
-                          textDirection: TextDirection.rtl,
-                        );
+                        return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('menu').snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return new Text('Loading...');
+          default:
+
+            return Container(
+              padding: EdgeInsets.only(top: 32,right:16,left:16),
+                child: ListView(
+                  
+              children:
+                  snapshot.data.documents.map((DocumentSnapshot document) {
+                   
+                
+//return Text(document.documentID.toString());
+if(liked_videos.contains(document.documentID) ){
+return Horizontal_big_card(docID:document.documentID ,title: document['title'],creator: document['creator'],banner:document['banner']);
+
+}else{return Text('');}
+
+
+              }).toList(),
+            ));
+        }
+      },
+    );
+                
                       }),
     );
   }
