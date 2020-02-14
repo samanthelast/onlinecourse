@@ -128,7 +128,7 @@ class _CourseState extends State<Course> {
                                         if(_userID!=null){liked_videos =
                                                           userDocument[
                                                               'liked_videos'];
-                                                              print(liked_videos.toString());
+                                                             
                                                 if(liked_videos.contains(widget.docID)){
                                                   isliked =1;
                                                 }else{
