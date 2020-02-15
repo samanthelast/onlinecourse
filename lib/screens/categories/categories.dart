@@ -67,7 +67,7 @@ class _CategoriesState extends State<Categories> {
                     trailing: Icon(Icons.arrow_forward_ios,color: Colors.blue,),
                     //leading: Icon(Icons.category,color: Colors.blue,),
                     onTap: () {
-                       _RouteToVideoListScreen(context);
+                       _RouteToVideoListScreen(context,unique[index]);
                     },
                   ),
                   textDirection: TextDirection.rtl,
@@ -94,11 +94,11 @@ class _CategoriesState extends State<Categories> {
     
   }
 
-  void _RouteToVideoListScreen(BuildContext context) {
+  void _RouteToVideoListScreen(BuildContext context, category) {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => Category(),
+          builder: (context) => Category(category),
         ));
   }
 }
