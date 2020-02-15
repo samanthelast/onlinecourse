@@ -227,7 +227,93 @@ class _CourseState extends State<Course> {
                               ),
                               Row(
                                 children: <Widget>[
-                                  Expanded(
+                                  BuyButton(res),
+                                                                    Expanded(
+                                                                        flex: 1,
+                                                                        child: Row(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.end,
+                                                                          children: <Widget>[
+                                                                            Text('تومان'),
+                                                                            SizedBox(
+                                                                              width: 8,
+                                                                            ),
+                                                                            Text(res['price'].toString()),
+                                                                            SizedBox(
+                                                                              width: 16,
+                                                                            ),
+                                                                            Icon(
+                                                                              Icons.local_atm,
+                                                                              color: Colors.blue,
+                                                                            ),
+                                                                          ],
+                                                                        )),
+                                                                  ],
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 16,
+                                                                ),
+                                                                Text(
+                                                                  res['description'],
+                                                                  textDirection: TextDirection.rtl,
+                                                                  textAlign: TextAlign.justify,
+                                                                  style: TextStyle(
+                                                                    fontSize: 16,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 16,
+                                                                ),
+                                                                Container(
+                                                                  width: MediaQuery.of(context).size.width,
+                                                                  //height: (250.0 * videos.length),
+                                                                  
+                                                                  child: ListView.builder(
+                                                                    shrinkWrap: true,
+                                                                    itemCount: videos.length,
+                                                                    itemBuilder:
+                                                                        (BuildContext context, int index) {
+                                                                      return Column(
+                                                                        children: <Widget>[
+                                                                          Text(
+                                                                            'ویدیو ' + (index + 1).toString(),
+                                                                            textDirection: TextDirection.rtl,
+                                                                            style: TextStyle(
+                                                                              fontSize: 16,
+                                                                            ),
+                                                                          ),
+                                                                          ChewieListItem(
+                                                                            videoPlayerController:
+                                                                                VideoPlayerController.network(
+                                                                              videos[index],
+                                                                            ),
+                                                                            looping: false,
+                                                                          )
+                                                                        ],
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    );
+                                                  }),
+                                            ],
+                                          ),
+                                        )),
+                                      );
+                                    }
+                                  
+                                    getFirebaseUser() async {
+                                      await FirebaseAuth.instance.currentUser();
+                                    }
+                                  
+                                     BuyButton(res) {
+                                      if(res['price'] != 0){
+return Expanded(
                                       flex: 1,
                                       child: Row(
                                         children: <Widget>[
@@ -245,87 +331,22 @@ class _CourseState extends State<Course> {
                                                       fontSize: 16.0,
                                                       color: Colors.white)))
                                         ],
-                                      )),
-                                  Expanded(
+                                      ));
+                                      }
+                                      else{
+                                        return Expanded(
                                       flex: 1,
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
                                         children: <Widget>[
-                                          Text('تومان'),
-                                          SizedBox(
-                                            width: 8,
-                                          ),
-                                          Text(res['price'].toString()),
-                                          SizedBox(
-                                            width: 16,
-                                          ),
-                                          Icon(
-                                            Icons.local_atm,
-                                            color: Colors.blue,
-                                          ),
+                                          Container(
+                                              alignment: Alignment.center,
+                                              height: 32.0,
+                                              width: 128,
+                                          )
                                         ],
-                                      )),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              Text(
-                                res['description'],
-                                textDirection: TextDirection.rtl,
-                                textAlign: TextAlign.justify,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width,
-                                //height: (250.0 * videos.length),
-                                
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: videos.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Column(
-                                      children: <Widget>[
-                                        Text(
-                                          'ویدیو ' + (index + 1).toString(),
-                                          textDirection: TextDirection.rtl,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        ChewieListItem(
-                                          videoPlayerController:
-                                              VideoPlayerController.network(
-                                            videos[index],
-                                          ),
-                                          looping: false,
-                                        )
-                                      ],
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  );
-                }),
-          ],
-        ),
-      )),
-    );
-  }
+                                      ));
+                                      }
+                                      
 
-  getFirebaseUser() async {
-    await FirebaseAuth.instance.currentUser();
-  }
+                                    }
 }
