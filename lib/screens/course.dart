@@ -284,8 +284,10 @@ class _CourseState extends State<Course> {
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width,
-                                height: (250.0 * videos.length),
+                                //height: (250.0 * videos.length),
+                                
                                 child: ListView.builder(
+                                  shrinkWrap: true,
                                   itemCount: videos.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
