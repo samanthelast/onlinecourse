@@ -2,7 +2,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:online_courses/screens/categories.dart';
+import 'package:online_courses/screens/categories/categories.dart';
+
 import 'package:online_courses/screens/home.dart';
 
 import 'package:online_courses/screens/profile_wrapper.dart';
@@ -59,7 +60,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static List<Widget> _widgetOptions = <Widget>[
     ProfileWrapper(),
     Search(),
-    Category(),
+    Categories(),
     Home(),
   ];
   void _onItemTapped(int index) {

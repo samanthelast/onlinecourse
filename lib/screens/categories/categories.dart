@@ -1,19 +1,19 @@
-import 'dart:convert';
-import 'dart:ffi';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:online_courses/screens/video_list.dart';
+import 'package:online_courses/screens/categories/category.dart';
 
-class Category extends StatefulWidget {
-  Category({Key key}) : super(key: key);
+
+class Categories extends StatefulWidget {
+  Categories({Key key}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
-    return _CategoryState();
+    return _CategoriesState();
   }
 }
 
-class _CategoryState extends State<Category> {
+class _CategoriesState extends State<Categories> {
   List<dynamic> getCategories = [];
   List<dynamic> disctinctCategories = [];
   var unique;
@@ -98,9 +98,7 @@ class _CategoryState extends State<Category> {
     Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => VideoList(
-              //categoryID
-              ),
+          builder: (context) => Category(),
         ));
   }
 }

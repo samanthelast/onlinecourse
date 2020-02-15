@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_courses/screens/course.dart';
-import 'package:online_courses/screens/video_list.dart';
+
 import 'package:online_courses/widgets/solo_video_layout.dart';
 
 class Horizontal_big_card extends StatefulWidget {
