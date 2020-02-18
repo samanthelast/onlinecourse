@@ -1,152 +1,105 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:online_courses/screens/search/searchservice.dart';
 import 'package:online_courses/services/database.dart';
 
 
 
 class Search extends StatefulWidget {
-  Search({Key key, this.title}) : super(key: key);
-  final String title;
+  Search({Key key}) : super(key: key);
+  //final String title;
   @override
   _SearchState createState() => new _SearchState();
 }
 
 class _SearchState extends State<Search> {
-  TextEditingController editingController = TextEditingController();
+   var queryResultSet = [];
+  var tempSearchStore = [];
 
-  final title = [
-    'اموزش کراس',
-    'اموزش سی پلاس پلاس',
-    'مهندسی نرم افزار',
-    'اموزش رسپری پای',
-    'اموزش رسپری پای',
-    'اموزش رسپری پای',
-    'اموزش رسپری پای',
-  ];
-  final creators = [
-    'سامان اریانپور',
-    'محمد دیلمی',
-    'همایون بهشتی',
-    'علی میرزازاده',
-    'علی میرزازاده',
-    'علی میرزازاده',
-    'علی میرزازاده',
-  ];
-  var items = List<String>();
+  initiateSearch(value) {
+    if (value.length == 0) {
+      setState(() {
+        queryResultSet = [];
+        tempSearchStore = [];
+      });
+    }
 
-  @override
-  void initState() {
-    items.addAll(title);
-    super.initState();
-  }
+    var capitalizedValue =
+        value.substring(0, 1).toUpperCase() + value.substring(1);
 
-  void filterSearchResults(String query) {
-    List<String> dummySearchList = List<String>();
-    dummySearchList.addAll(title);
-    if (query.isNotEmpty) {
-      List<String> dummyListData = List<String>();
-      dummySearchList.forEach((item) {
-        if (item.contains(query)) {
-          dummyListData.add(item);
+    if (queryResultSet.length == 0 && value.length == 1) {
+      SearchService().searchByName(value).then((QuerySnapshot docs) {
+        for (int i = 0; i < docs.documents.length; ++i) {
+          queryResultSet.add(docs.documents[i].data);
         }
       });
-      setState(() {
-        items.clear();
-        items.addAll(dummyListData);
-      });
-      return;
     } else {
-      setState(() {
-        items.clear();
-        items.addAll(title);
+      tempSearchStore = [];
+      queryResultSet.forEach((element) {
+        if (element['title'].startsWith(capitalizedValue)) {
+          setState(() {
+            tempSearchStore.add(element);
+          });
+        }
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(top: 64, left: 32, right: 32),
-      child: Column(
-        children: <Widget>[
-          Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Directionality(
-                child: TextField(
-                  onChanged: (value) {
-                    filterSearchResults(value);
-                  
-                  },
-                  controller: editingController,
-                  decoration: InputDecoration(
-                      labelText: "جستجو",
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(25.0)))),
-                ),
-                textDirection: TextDirection.rtl,
-              )),
-          Expanded(
-            child: ListView.builder(
-              
-              shrinkWrap: true,
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: Column(children:<Widget>[ListTile(
-                      title: Text('${items[index]}'),
-                      trailing: Text('${creators[index]}'),
-                      onTap: () {
-                        _RouteToCourseScreen(context);
-                        /*      _RouteToDetailScreen(
-                        context,
-                        Products[index].getcardColor(),
-                        Products[index].getimgUrl(),
-                        Products[index].getpreviousPrice(),
-                        Products[index].getprice(),
-                        Products[index].getTitle()); */
+    return new Scaffold(
+        
+        body: Container(
+          padding: EdgeInsets.only(top: 32, left: 16, right: 16),
+          child:
+            ListView(children: <Widget>[
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Directionality(
+                    child: TextField(
+                      onChanged: (val) {
+                       
+                      initiateSearch(val);
                       },
-                    ),Divider()]
+                      
+                      decoration: InputDecoration(
+                          labelText: "جستجو",
+                          prefixIcon: Icon(Icons.search),
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(25.0)))),
+                    ),
+                    textDirection: TextDirection.rtl,
+                  )),
+              SizedBox(height: 10.0),
+              ListView(
+                
+                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
                   
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+                  primary: false,
+                  shrinkWrap: true,
+                  children: tempSearchStore.map((element) {
+                    return buildResultCard(element);
+                  }).toList())
+
+            ]),
+          
+        ));
   }
-void _RouteToCourseScreen(BuildContext context) {
-  /* 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Course(
-            videoID: '1',
-            videoVal: '1',
-            title:'1',
-            videoLengh:'1',
-            price:'1',
-            description:'1',
-          ),
-        ));
-  
- */
 }
-  /*  void _RouteToDetailScreen(BuildContext context, int cardColor, String imgUrl,
-      String title, String previousPrice, String price) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DetailScreen(
-            cardColor: cardColor,
-            imgUrl: imgUrl,
-            title: title,
-            previousPrice: previousPrice,
-            price: price,
-          ),
-        ));
-  } */
+
+Widget buildResultCard(data) {
+  return Container(
+   child: Directionality(textDirection: TextDirection.rtl, child: ListTile(
+       title: Text(data['title']),
+       subtitle: Text( 'تهیه کننده: '+ data['creator']),
+       
+       trailing: Icon(Icons.arrow_forward_ios,color: Colors.blue),
+       onTap: (){},
+    )),
+   decoration: BoxDecoration(
+      border: Border(bottom: BorderSide(color: Colors.black26))),
+);
+    
+  
 }
