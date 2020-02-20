@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -12,8 +13,10 @@ class BuyButton extends StatefulWidget {
 }
 
 class _BuyButtonState extends State<BuyButton> {
+  
   @override
   Widget build(BuildContext context) {
+    bool isStopped = false;
     if (widget.price != 0) {
       return Expanded(
           flex: 1,
@@ -21,7 +24,7 @@ class _BuyButtonState extends State<BuyButton> {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  ZarinReq(widget.price);
+                  ZarinReq(widget.price,isStopped);
                 },
                 child: Container(
                     alignment: Alignment.center,
@@ -53,12 +56,13 @@ class _BuyButtonState extends State<BuyButton> {
   }
 }
 
-ZarinReq(price) async {
+ZarinReq(price,isStopped) async {
+  price = price*1000;
   String url =
       'https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentRequest.json';
   Map map = {
     "MerchantID": "5344db9c-c398-4b62-9c69-03525ee8a9d4",
-    "Amount": "100",
+    "Amount": price.toString(),
     "CallbackURL": "http://www.example.com",
     "Description": "توضیحات تراکنش",
     "Email": "dev@example.com",
@@ -71,20 +75,55 @@ ZarinReq(price) async {
 
   if (body['Status'] == 100) {
    
-    String zarinLink='http://sandbox.zarinpal.com/pg/StartPay/'+body['Authority'];
-    
+     String zarinLink='http://sandbox.zarinpal.com/pg/StartPay/'+body['Authority'];
+    print(zarinLink);
+    //await launch(zarinLink);
+
+
+  if (await canLaunch(zarinLink)) {
     await launch(zarinLink);
-/*     String payUrl =
-        'http://sandbox.zarinpal.com/pg/rest/WebGate/PaymentVerification.json';
-    Map payMap = {
-      "MerchantID": "5344db9c-c398-4b62-9c69-03525ee8a9d4",
-      "Amount": price,
-      "Authority": body['Authority']
-    };
-    print(await apiPay(payUrl, payMap)); */
+    print('here');
+  } else {
+    throw 'Could not launch $zarinLink';
+  }
+//did user baught? check every 5 sec
+sec5Timer(body,price,isStopped);
+     
+
   }else{
     print('snack bar zarin pal failed');
   }
+}
+
+sec5Timer(body,price,isStopped) {
+  
+  Timer.periodic(Duration(seconds: 5), (timer) async {
+    if (isStopped) {
+      timer.cancel();
+    }
+    
+     String payUrl =
+        'http://sandbox.zarinpal.com/pg/rest/WebGate/PaymentVerification.json';
+    Map payMap = {
+      "MerchantID": "5344db9c-c398-4b62-9c69-03525ee8a9d4",
+      "Amount": price.toString(),
+      "Authority": body['Authority']
+    };
+    
+ final body2 = json.decode(await apiPay(payUrl, payMap));
+ if (body2['Status'] == 100){
+   isStopped=true;
+   print('kharid anjam shod');
+ }
+ if (body2['Status'] == -21){
+   isStopped=true;
+   print('kharid laghv shod');
+ }
+ else{
+  isStopped=true;
+   print('unknow error :(');
+ }
+  });
 }
 
 Future<String> apiRequest(String url, Map jsonMap) async {
