@@ -200,6 +200,7 @@ class _CourseState extends State<Course> {
                                             MainAxisAlignment.end,
                                         children: <Widget>[
                                           Column(
+                                            crossAxisAlignment: CrossAxisAlignment.end,
                                             children: <Widget>[
                                               Text(
                                                 res['title'],

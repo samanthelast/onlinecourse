@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_courses/screens/course.dart';
+import 'package:online_courses/screens/course/course_wrapper.dart';
 
 import 'package:online_courses/widgets/solo_video_layout.dart';
 
@@ -78,6 +79,9 @@ class _MyHomePageState extends State<Horizontal_big_card> {
         context,
         MaterialPageRoute(
           builder: (context) => Course(docID: widget.docID),
+//builder: (context) => CourseWrapper(docID: widget.docID),
+
+          
         ));
   }
 }
