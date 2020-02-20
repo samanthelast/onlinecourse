@@ -147,52 +147,7 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     SizedBox(height: 16.0),
-                    OutlineButton(
-                      splashColor: Colors.grey,
-                      onPressed: () async {
-                        setState(() => loading = true);
-                        dynamic res = await _auth.loginWithGoogle();
-
-                        if (res == null) {
-                          setState(() {
-                            loading = false;
-                            error = "error logging in with google";
-                          });
-                        } else {
-                          setState(() {
-                            loading = false;
-                            Navigator.pop(context);
-                          });
-                        }
-                      },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(40)),
-                      highlightElevation: 0,
-                      borderSide: BorderSide(color: Colors.grey),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Image(
-                                image:
-                                    AssetImage("assets/images/google_logo.png"),
-                                height: 35.0),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: Text(
-                                'ورود با حساب گوگل',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                   
                     Text(
                       error,
                       style: TextStyle(color: Colors.red, fontSize: 14.0),

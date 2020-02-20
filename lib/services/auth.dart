@@ -30,24 +30,34 @@ class AuthService {
 Future<bool> loginWithGoogle() async {
  
     try {
-      
+    
       GoogleSignIn googleSignIn = GoogleSignIn();
+      
       GoogleSignInAccount account = await googleSignIn.signIn();
-      if(account == null )
+    
+      if(account == null ){
+  
         return false;
+      }
+   
       AuthResult res = await _auth.signInWithCredential(GoogleAuthProvider.getCredential(
+        
         idToken: (await account.authentication).idToken,
         accessToken: (await account.authentication).accessToken,
       ));
+   
       FirebaseUser user = res.user;
 
         //auto create collection first time
-        await DatabaseService(uid: user.uid).updateUserData(0,[]);
+        await DatabaseService(uid: user.uid).updateUserData(0,[],[]);
 
         //
 
-      if(res.user == null)
-        return false;
+      if(res.user == null){
+     
+         return false;
+      }
+     
       return true;
     } catch (e) {
       print("Error logging with google");
@@ -79,7 +89,7 @@ Future<bool> loginWithGoogle() async {
       FirebaseUser user = result.user;
       
         //auto create collection first time
-        await DatabaseService(uid: user.uid).updateUserData(0,[]);
+        await DatabaseService(uid: user.uid).updateUserData(0,[],[]);
 
         //
       return _userFromFirebaseUser(user);
