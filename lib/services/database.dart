@@ -6,6 +6,16 @@ class DatabaseService {
   DatabaseService({this.uid});
   // collection reference
   final CollectionReference userCollection = Firestore.instance.collection('users');
+
+Future AddDepositToUser(int amount)async{
+    return await userCollection.document(uid).updateData({
+      'credit' : amount,
+      
+    });
+
+  }
+
+
   Future updateUserData(int credit,List<dynamic> liked_videos)async{
     return await userCollection.document(uid).setData({
       'credit' : credit,
@@ -24,7 +34,7 @@ class DatabaseService {
       'liked_videos' : FieldValue.arrayRemove(course_id),
     });
     
-   
+  
 
    
 

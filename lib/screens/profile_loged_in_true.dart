@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:online_courses/services/auth.dart';
+import 'package:online_courses/widgets/AddCreditButton.dart';
 import 'package:online_courses/widgets/support_contact.dart';
 
 import 'favourite.dart';
@@ -70,13 +71,7 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
                         //return new Text(userDocument['credit'].toString());
                         return Directionality(
                           child: ListTile(
-                            trailing: FlatButton(
-                              child: const Text(
-                                'افزایش اعتبار',
-                                style: TextStyle(color: Colors.blue),
-                              ),
-                              onPressed: () {/* ... */},
-                            ),
+                            trailing: AddCreditButton(_userID,userDocument['credit']),
                             title: Text('اعتبار من ' + userDocument['credit'].toString() + ' تومان'),
                             leading: Icon(
                               Icons.credit_card,
