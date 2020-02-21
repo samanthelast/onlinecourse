@@ -24,6 +24,7 @@ class _CourseState extends State<Course> {
   var _likeIcons = [Icons.favorite_border, Icons.favorite];
   String _userID;
   List<dynamic> liked_videos;
+  List<dynamic> bought_videos;
   _getUserID() async {
     try {
       FirebaseUser user = await FirebaseAuth.instance.currentUser();
@@ -40,6 +41,7 @@ class _CourseState extends State<Course> {
   void initState() {
     super.initState();
     _getUserID();
+
     //_getUserCredit();
   }
 
@@ -122,11 +124,12 @@ class _CourseState extends State<Course> {
                                                 var userDocument =
                                                     snapshot.data;
 
-                                               
-
                                                 if (_userID != null) {
                                                   liked_videos = userDocument[
                                                       'liked_videos'];
+
+                                                  bought_videos = userDocument[
+                                                      'bought_videos'];
 
                                                   if (liked_videos
                                                       .contains(widget.docID)) {
@@ -200,7 +203,8 @@ class _CourseState extends State<Course> {
                                             MainAxisAlignment.end,
                                         children: <Widget>[
                                           Column(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
                                             children: <Widget>[
                                               Text(
                                                 res['title'],
@@ -230,7 +234,21 @@ class _CourseState extends State<Course> {
                               ),
                               Row(
                                 children: <Widget>[
-                                  BuyButton(res['price']),
+                                  StreamBuilder(
+                                      stream: Firestore.instance
+                                          .collection('users')
+                                          .document(_userID)
+                                          .snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (!snapshot.hasData) {
+                                          return new Text("Loading");
+                                        }
+                                        var userDocument = snapshot.data;
+                                        
+                                        return BuyButton(res['price'],_userID,userDocument['bought_videos'],widget.docID);
+                                      }),
+                                  // 
+
                                   Expanded(
                                       flex: 1,
                                       child: Row(
