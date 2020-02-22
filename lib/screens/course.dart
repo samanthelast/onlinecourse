@@ -246,14 +246,17 @@ class _CourseState extends State<Course> {
                                           return new Text("Loading");
                                         }
                                         var userDocument = snapshot.data;
-                                         if (userDocument['bought_videos'].contains(widget.docID)) {
-          
-            isBought = 1;
-
-          }
-                                        return BuyButton(res['price'],_userID,userDocument['bought_videos'],widget.docID);
+                                        if (userDocument['bought_videos']
+                                            .contains(widget.docID)) {
+                                          isBought = 1;
+                                        }
+                                        return BuyButton(
+                                            res['price'],
+                                            _userID,
+                                            userDocument['bought_videos'],
+                                            widget.docID);
                                       }),
-                                  // 
+                                  //
 
                                   Expanded(
                                       flex: 1,
@@ -291,85 +294,100 @@ class _CourseState extends State<Course> {
                               SizedBox(
                                 height: 16,
                               ),
-                              Container(
+
+                              StreamBuilder(
+                                      stream: Firestore.instance
+                                          .collection('users')
+                                          .document(_userID)
+                                          .snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (!snapshot.hasData) {
+                                          return new Text("Loading");
+                                        }
+                                        var userDocument = snapshot.data;
+                                        if (userDocument['bought_videos']
+                                            .contains(widget.docID)) {
+                                          isBought = 1;
+                                        }else{
+                                          isBought=0;
+                                        }
+                                        print(isBought);
+                                        return Container(
                                 width: MediaQuery.of(context).size.width,
                                 //height: (250.0 * videos.length),
 
                                 child: MyListView(videos),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  );
-                                                }),
-                                          ],
-                                        ),
-                                      )),
-                                    );
-                                  }
-                                
-                                  getFirebaseUser(videos) async {
-                                    await FirebaseAuth.instance.currentUser();
-                                  }
-                                
-                                  MyListView(List videos) {
-                                    
-                                 
-                                    if(isBought == 1){
-return ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: videos.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Column(
-                                      children: <Widget>[
-                                        Text(
-                                          'ویدیو ' + (index + 1).toString(),
-                                          textDirection: TextDirection.rtl,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        ChewieListItem(
-                                          videoPlayerController:
-                                              VideoPlayerController.network(
-                                            videos[index],
-                                          ),
-                                          looping: false,
-                                        )
-                                      ],
-                                    );
-                                  },
-                                );
-                                    }if(isBought == 0){
-return ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: 1,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Column(
-                                      children: <Widget>[
-                                        Text(
-                                          'این توتاریال شامل ${videos.length} ویدیو میباشد برای استفاده از پکیج کامل این توتاریال را خریداری نمایید.',
-                                          textDirection: TextDirection.rtl,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                        
-                                        ChewieListItem(
-                                          videoPlayerController:
-                                              VideoPlayerController.network(
-                                            videos[index],
-                                          ),
-                                          looping: false,
-                                        )
-                                      ],
-                                    );
-                                  },
-                                );
-                                    }
-                                    }
+                              );
+                                      }),
+
+                              
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                }),
+          ],
+        ),
+      )),
+    );
+  }
+
+  getFirebaseUser(videos) async {
+    await FirebaseAuth.instance.currentUser();
+  }
+
+  MyListView(List videos) {
+    if (isBought == 1) {
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: videos.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            children: <Widget>[
+              Text(
+                'ویدیو ' + (index + 1).toString(),
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              ChewieListItem(
+                videoPlayerController: VideoPlayerController.network(
+                  videos[index],
+                ),
+                looping: false,
+              )
+            ],
+          );
+        },
+      );
+    }
+    if (isBought == 0) {
+      return ListView.builder(
+        shrinkWrap: true,
+        itemCount: 1,
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            children: <Widget>[
+              Text(
+                'این توتاریال شامل ${videos.length} ویدیو میباشد برای استفاده از پکیج کامل این توتاریال را خریداری نمایید.',
+                textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              ChewieListItem(
+                videoPlayerController: VideoPlayerController.network(
+                  videos[index],
+                ),
+                looping: false,
+              )
+            ],
+          );
+        },
+      );
+    }
+  }
 }
