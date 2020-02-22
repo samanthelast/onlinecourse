@@ -311,7 +311,6 @@ class _CourseState extends State<Course> {
                                         }else{
                                           isBought=0;
                                         }
-                                        print(isBought);
                                         return Container(
                                 width: MediaQuery.of(context).size.width,
                                 //height: (250.0 * videos.length),

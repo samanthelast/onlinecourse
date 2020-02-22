@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:online_courses/services/database.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BuyButton extends StatefulWidget {
@@ -100,7 +101,7 @@ class _BuyButtonState extends State<BuyButton> {
                    print('clicked');
                    print(widget.price);
                    print(credit.toString());
-                   if(widget.price > credit){
+                   if(widget.price > credit && isBought ==0){
 Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(
                         '.اعتبار حساب شما کافی نیست',
@@ -203,8 +204,10 @@ child:Container(
                                           fontSize: 20.0,
                                           color: Colors.white))) ,
                 onTap: () async {
-                  
-                               
+                   List<dynamic> courseID = [widget.docID];
+                   await DatabaseService(uid: _userID).BuyVideo(courseID, amountLeft);
+                 // BuyVideo(widget.docID,amountLeft);
+                                Navigator.of(context).pop();
                               },
               )
               ],

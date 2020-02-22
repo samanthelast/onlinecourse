@@ -7,12 +7,7 @@ class DatabaseService {
   // collection reference
   
   final CollectionReference userCollection = Firestore.instance.collection('users');
-Future BuyVideo(List<dynamic> course_id)async{
-    return await userCollection.document(uid).updateData({
-      'bought_videos' : FieldValue.arrayUnion(course_id),
-    });
 
-  }
 Future AddDepositToUser(int amount)async{
     return await userCollection.document(uid).updateData({
       'credit' : amount,
@@ -20,7 +15,14 @@ Future AddDepositToUser(int amount)async{
     });
 
   }
+  
+Future BuyVideo(List<dynamic> course_id, int credit)async{
+    return await userCollection.document(uid).updateData({
+      'bought_videos' : FieldValue.arrayUnion(course_id),
+      'credit' : credit
+    });
 
+  }
 
   Future updateUserData(int credit,List<dynamic> liked_videos,List<dynamic> bought_videos)async{
     return await userCollection.document(uid).setData({
