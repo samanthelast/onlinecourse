@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:online_courses/screens/bought.dart';
 import 'package:online_courses/services/auth.dart';
 import 'package:online_courses/widgets/AddCreditButton.dart';
 import 'package:online_courses/widgets/support_contact.dart';
@@ -90,81 +91,91 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
                         Icons.shopping_basket,
                         color: Colors.blue,
                       ),
-                      onTap: () {},
-                    ),
-                    textDirection: TextDirection.rtl,
-                  ),
-                  Directionality(
-                    child: ListTile(
-                      title: Text('محبوب های من'),
-                      leading: Icon(
-                        Icons.favorite,
-                        color: Colors.red,
-                      ),
                       onTap: () {
-                        _RouteToFavScreen(context);
-                      },
-                    ),
-                    textDirection: TextDirection.rtl,
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  SupportContact(),
-                  Directionality(
-                    child: ListTile(
-                      trailing: FlatButton(
-                        child: const Text(
-                          'ویرایش',
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                        onPressed: () {/* ... */},
-                      ),
-                      title: Text(_userEmail),
-                      leading: Icon(
-                        Icons.person,
-                        color: Colors.blue,
-                      ),
-                      onTap: () {},
-                    ),
-                    textDirection: TextDirection.rtl,
-                  ),
-                  Directionality(
-                    child: ListTile(
-                      trailing: FlatButton(
-                        child: const Text(
-                          'خروج',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                        onPressed: () async {
-                          dynamic result = await _auth.signOut();
-
-                          print(result);
-                        },
-                      ),
-                      onTap: () {},
-                    ),
-                    textDirection: TextDirection.rtl,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _RouteToFavScreen(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Favourite(),
-        ));
-  }
+                        _RouteToBaoughtScreen(context);
+                                              },
+                                            ),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                          Directionality(
+                                            child: ListTile(
+                                              title: Text('محبوب های من'),
+                                              leading: Icon(
+                                                Icons.favorite,
+                                                color: Colors.red,
+                                              ),
+                                              onTap: () {
+                                                _RouteToFavScreen(context);
+                                              },
+                                            ),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          SupportContact(),
+                                          Directionality(
+                                            child: ListTile(
+                                              trailing: FlatButton(
+                                                child: const Text(
+                                                  'ویرایش',
+                                                  style: TextStyle(color: Colors.blue),
+                                                ),
+                                                onPressed: () {/* ... */},
+                                              ),
+                                              title: Text(_userEmail),
+                                              leading: Icon(
+                                                Icons.person,
+                                                color: Colors.blue,
+                                              ),
+                                              onTap: () {},
+                                            ),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                          Directionality(
+                                            child: ListTile(
+                                              trailing: FlatButton(
+                                                child: const Text(
+                                                  'خروج',
+                                                  style: TextStyle(color: Colors.red),
+                                                ),
+                                                onPressed: () async {
+                                                  dynamic result = await _auth.signOut();
+                        
+                                                  print(result);
+                                                },
+                                              ),
+                                              onTap: () {},
+                                            ),
+                                            textDirection: TextDirection.rtl,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                        
+                          void _RouteToFavScreen(BuildContext context) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Favourite(),
+                                ));
+                          }
+                        
+                          void _RouteToBaoughtScreen(BuildContext context) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Bought(),
+                                ));
+                          }
 }

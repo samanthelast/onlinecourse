@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:online_courses/screens/course.dart';
-import 'package:online_courses/screens/course/course_wrapper.dart';
+
 
 import 'package:online_courses/widgets/solo_video_layout.dart';
 
