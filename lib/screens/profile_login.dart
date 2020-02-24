@@ -21,6 +21,19 @@ class _LoginState extends State<Login> {
   // text field state
   String email = '';
   String password = '';
+
+ 
+
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    emailController.dispose();
+  }
+  bool isStopped = false;
+   final emailController = TextEditingController();
+  bool isEmailSent = false;
+
   @override
   Widget build(BuildContext context) {
     return loading
@@ -96,93 +109,169 @@ class _LoginState extends State<Login> {
                           child: Padding(
                             padding: const EdgeInsets.only(
                                 left: 10.0, right: 20.0, top: 10.0),
-                            child: new Container(
-                                alignment: Alignment.center,
-                                height: 60.0,
-                                child: new Text("فراموشی رمز عبور",
-                                    style: new TextStyle(
-                                        fontSize: 17.0, color: Colors.blue))),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 20.0, right: 5.0, top: 10.0),
                             child: GestureDetector(
-                              onTap: () async {
-                                if (_formKey.currentState.validate()) {
-                                  setState(() => loading = true);
-                                  dynamic result =
-                                      await _auth.signInWithEmailAndPassword(
-                                          email, password);
+                              onTap: (){
+                              
+                                  _showDialog();
+                               
+                                 
+                                                   
+                                
+                                                  
 
-                                  if (result == null) {
-                                    setState(() {
-                                      loading = false;
-                                      error =
-                                          'Could not sign in with those credentials';
-                                    });
-                                  } else {
-                                    setState(() {
-                                      loading = false;
-                                      Navigator.pop(context);
-                                    });
+                                                              },
+                                                              child: new Container(
+                                                                  alignment: Alignment.center,
+                                                                  height: 60.0,
+                                                                  child: new Text("فراموشی رمز عبور",
+                                                                      style: new TextStyle(
+                                                                          fontSize: 17.0, color: Colors.blue))),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.only(
+                                                                left: 20.0, right: 5.0, top: 10.0),
+                                                            child: GestureDetector(
+                                                              onTap: () async {
+                                                                if (_formKey.currentState.validate()) {
+                                                                  setState(() => loading = true);
+                                                                  dynamic result =
+                                                                      await _auth.signInWithEmailAndPassword(
+                                                                          email, password);
+                                
+                                                                  if (result == null) {
+                                                                    setState(() {
+                                                                      loading = false;
+                                                                      error =
+                                                                          'Could not sign in with those credentials';
+                                                                    });
+                                                                  } else {
+                                                                    setState(() {
+                                                                      loading = false;
+                                                                      Navigator.pop(context);
+                                                                    });
+                                                                  }
+                                                                }
+                                                              },
+                                                              child: new Container(
+                                                                  alignment: Alignment.center,
+                                                                  height: 60.0,
+                                                                  decoration: new BoxDecoration(
+                                                                      color: Colors.blue,
+                                                                      borderRadius:
+                                                                          new BorderRadius.circular(9.0)),
+                                                                  child: new Text("ورود",
+                                                                      style: new TextStyle(
+                                                                          fontSize: 20.0,
+                                                                          color: Colors.white))),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(height: 16.0),
+                                                    Text(
+                                                      error,
+                                                      style: TextStyle(color: Colors.red, fontSize: 14.0),
+                                                    ),
+                                                    Expanded(
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.end,
+                                                        children: <Widget>[
+                                                          Padding(
+                                                            padding: const EdgeInsets.only(bottom: 18.0),
+                                                            child: GestureDetector(
+                                                              child: new Text("هنوز ثبت نام نکرده ام",
+                                                                  style: new TextStyle(
+                                                                      fontSize: 17.0,
+                                                                      color: Colors.blue,
+                                                                      fontWeight: FontWeight.bold)),
+                                                              onTap: () {
+                                                                _RouteToRegisterScreen(context);
+                                                              },
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ));
                                   }
-                                }
-                              },
-                              child: new Container(
+                                
+                                  void _RouteToRegisterScreen(BuildContext context) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Register(),
+                                        ));
+                                  }
+                                
+                                     _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return Directionality(
+          child: AlertDialog(
+            title: new Text("فراموشی رمز عبور",),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('ایمیل حساب خود را وارد نمایید.'),
+                TextField(
+                  controller: emailController,
+            decoration: InputDecoration(
+              
+              hintText: 'ایمیل',
+            ),
+          ),
+              SizedBox(height: 32,),
+              GestureDetector(
+child:Container(
                                   alignment: Alignment.center,
                                   height: 60.0,
                                   decoration: new BoxDecoration(
                                       color: Colors.blue,
                                       borderRadius:
                                           new BorderRadius.circular(9.0)),
-                                  child: new Text("ورود",
+                                  child: new Text("دریافت رمزعبور جدید",
                                       style: new TextStyle(
                                           fontSize: 20.0,
-                                          color: Colors.white))),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16.0),
-                   
-                    Text(
-                      error,
-                      style: TextStyle(color: Colors.red, fontSize: 14.0),
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 18.0),
-                            child: GestureDetector(
-                              child: new Text("هنوز ثبت نام نکرده ام",
-                                  style: new TextStyle(
-                                      fontSize: 17.0,
-                                      color: Colors.blue,
-                                      fontWeight: FontWeight.bold)),
-                              onTap: () {
-                                _RouteToRegisterScreen(context);
+                                          color: Colors.white))) ,
+                onTap: () async {
+                  var email = emailController.text;
+                  print(email);
+ _auth.resetPassword(email);
+ 
+              Navigator.of(context).pop();   
+              
+                    
                               },
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+              )
+     
+      
+              ],
+            ),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              new FlatButton(
+                child: new Text("بستن"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
-            ));
-  }
+            ],
+          ),
+          textDirection: TextDirection.rtl,
+        );
+      },
+    );
 
-  void _RouteToRegisterScreen(BuildContext context) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Register(),
-        ));
   }
 }

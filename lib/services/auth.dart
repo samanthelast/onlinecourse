@@ -98,7 +98,11 @@ Future<bool> loginWithGoogle() async {
       return null;
     } 
   }
-
+//forgot password
+@override
+Future<void> resetPassword(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
+}
   // sign out
   Future signOut() async {
     
