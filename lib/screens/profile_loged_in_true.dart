@@ -20,7 +20,10 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
   final AuthService _auth = AuthService();
   String _userEmail = 'empty';
   String _userID;
-
+ String password1 = '';
+  String password2 = '';
+  final _formKey = GlobalKey<FormState>();
+  String error = '';
   _getUserAuthEmail() async {
     try {
       FirebaseUser user = await FirebaseAuth.instance.currentUser();
@@ -41,10 +44,20 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
     _getUserAuthEmail();
     //_getUserCredit();
   }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    passController.dispose();
+  }
+
+  bool isStopped = false;
+  final passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('حساب کاربری'),
         centerTitle: true,
@@ -126,7 +139,11 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
                                                   'ویرایش',
                                                   style: TextStyle(color: Colors.blue),
                                                 ),
-                                                onPressed: () {/* ... */},
+                                                onPressed: () {
+                                                  
+
+                                                  _showDialog();
+                                                },
                                               ),
                                               title: Text(_userEmail),
                                               leading: Icon(
@@ -178,4 +195,91 @@ class _ProfileLogedInTrueState extends State<ProfileLogedInTrue> {
                                   builder: (context) => Bought(),
                                 ));
                           }
+
+
+
+
+                          _showDialog() {
+    // flutter defined function
+    showDialog(
+      
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return Form(
+          key: _formKey,
+                  child: Directionality(
+            child: AlertDialog(
+              title: new Text(
+                "تغییر رمز عبور",
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                 // Text(' رمزعبور جدید خود را وارد نمایید.'),
+                  TextFormField(
+                            obscureText: true,
+                            textAlign: TextAlign.center,
+                            decoration:
+                                new InputDecoration(labelText: 'رمزعبور جدید خود را وارد نمایید'),
+                            validator: (val) =>
+                                val.length < 6 ? 'رمز عبور کوتاه است' : null,
+                            onChanged: (val) {
+                              setState(() => password1 = val);
+                            },
+                          )
+                  ,
+                 
+                  SizedBox(
+                    height: 32,
+                  ),
+                  GestureDetector(
+                    child: Container(
+                        alignment: Alignment.center,
+                        height: 60.0,
+                        decoration: new BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: new BorderRadius.circular(9.0)),
+                        child: new Text("تایید",
+                            style: new TextStyle(
+                                fontSize: 20.0, color: Colors.white))),
+                    onTap: () async {
+                          if (_formKey.currentState.validate()) {
+                                 try{
+await _auth.changePassword(password1);
+
+                                 }catch(e){
+                                   print(e);
+                                 }
+                                   
+                                   
+ Navigator.of(context).pop();
+
+                                  
+                                 
+                                }
+                    },
+                  )
+                ],
+              ),
+              actions: <Widget>[
+                // usually buttons at the bottom of the dialog
+                new FlatButton(
+                  child: new Text("بستن"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+            textDirection: TextDirection.rtl,
+          ),
+        );
+      },
+    );
+  }
+
 }
+
+
